@@ -1,0 +1,38 @@
+src/components/StackAndTimeSection.vue
+  f9d5ee57efd75066 215,220-221
+src/App.vue
+  b6dd74e3b643f41e 6,23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.23",
+  "base_commit_sha": "3111ad847a5a5ac09b637b87e8895d986836c139",
+  "prompts": {
+    "b6dd74e3b643f41e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019e255d-b306-7401-b12b-ce2248837a64",
+        "model": "gpt-5.5"
+      },
+      "human_author": "dito-baskoro <ditoabaskoro@gmail.com>",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 0,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    },
+    "f9d5ee57efd75066": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019e2569-8f04-7fe1-9812-c0e52cd40579",
+        "model": "gpt-5.5"
+      },
+      "human_author": "dito-baskoro <ditoabaskoro@gmail.com>",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 1,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    }
+  }
+}
