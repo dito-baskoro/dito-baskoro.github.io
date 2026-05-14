@@ -2,6 +2,8 @@
 import { ref } from 'vue'
 import LoadingScreen from './components/LoadingScreen.vue'
 import HeroSection from './components/HeroSection.vue'
+import StackAndTimeSection from './components/StackAndTimeSection.vue'
+import FooterNavigation from './components/FooterNavigation.vue'
 
 const showLoading = ref(true)
 const animateHero = ref(false)
@@ -17,6 +19,8 @@ function onLoadingComplete() {
 
 <template>
   <HeroSection :animate="animateHero" />
+  <StackAndTimeSection />
+  <FooterNavigation />
   <LoadingScreen
     v-if="showLoading"
     @exiting="onLoadingExiting"
@@ -27,7 +31,6 @@ function onLoadingComplete() {
 <style>
 html,
 body {
-  overflow: hidden;
-  height: 100%;
+  min-height: 100%;
 }
 </style>
