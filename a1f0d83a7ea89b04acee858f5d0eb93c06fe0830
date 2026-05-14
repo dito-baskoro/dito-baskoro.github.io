@@ -1,0 +1,23 @@
+src/components/StackAndTimeSection.vue
+  f9d5ee57efd75066 26,29-36,47-66,68-121,138-139,142,169-178,266-268,271-273,276-279,319-321,335-346
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.23",
+  "base_commit_sha": "a1f0d83a7ea89b04acee858f5d0eb93c06fe0830",
+  "prompts": {
+    "f9d5ee57efd75066": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019e2569-8f04-7fe1-9812-c0e52cd40579",
+        "model": "gpt-5.5"
+      },
+      "human_author": "dito-baskoro <ditoabaskoro@gmail.com>",
+      "messages": [],
+      "total_additions": 127,
+      "total_deletions": 2,
+      "accepted_lines": 124,
+      "overriden_lines": 3
+    }
+  }
+}
