@@ -1,0 +1,27 @@
+index.html
+  a7cb350acd76e83f 5-9
+public/favicon.svg
+  a7cb350acd76e83f 1
+public/site.webmanifest
+  a7cb350acd76e83f 1-21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.23",
+  "base_commit_sha": "c1bf673c8687cb666093bfcc6ee01fd9c609693f",
+  "prompts": {
+    "a7cb350acd76e83f": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019e252c-c8eb-7ca3-9c01-a18437396b16",
+        "model": "gpt-5.5"
+      },
+      "human_author": "dito-baskoro <ditoabaskoro@gmail.com>",
+      "messages": [],
+      "total_additions": 27,
+      "total_deletions": 1,
+      "accepted_lines": 27,
+      "overriden_lines": 0
+    }
+  }
+}
