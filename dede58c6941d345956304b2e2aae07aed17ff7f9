@@ -1,0 +1,39 @@
+.oxlintrc.json
+  a51ffd5ca92ca17c 1
+src/components/AnalogClock.vue
+  a51ffd5ca92ca17c 1-128
+package.json
+  a51ffd5ca92ca17c 30-31
+src/components/StackAndTimeSection.vue
+  a51ffd5ca92ca17c 2-3,11-12
+src/components/LocalTimePanel.vue
+  a51ffd5ca92ca17c 1-89
+src/components/FooterNavigation.vue
+  a51ffd5ca92ca17c 1-4,7
+src/components/HeroSection.vue
+  a51ffd5ca92ca17c 2,4,10-11,20-22,24-27,29,36,43,50,57,66-69,82-84
+src/components/TechnologyStack.vue
+  a51ffd5ca92ca17c 1-85
+src/components/SocialNavigation.vue
+  a51ffd5ca92ca17c 1-90
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.23",
+  "base_commit_sha": "dede58c6941d345956304b2e2aae07aed17ff7f9",
+  "prompts": {
+    "a51ffd5ca92ca17c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019e257d-a218-75e0-a764-32d99adfbf20",
+        "model": "gpt-5.5"
+      },
+      "human_author": "dito-baskoro <ditoabaskoro@gmail.com>",
+      "messages": [],
+      "total_additions": 427,
+      "total_deletions": 469,
+      "accepted_lines": 427,
+      "overriden_lines": 0
+    }
+  }
+}
