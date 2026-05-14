@@ -1,10 +1,13 @@
 <script setup>
-import { watch } from 'vue'
+import { ref, watch } from 'vue'
 import gsap from 'gsap'
+import SocialNavigation from './SocialNavigation.vue'
 
 const props = defineProps({
   animate: Boolean,
 })
+
+const heroRef = ref(null)
 
 watch(
   () => props.animate,
@@ -14,42 +17,44 @@ watch(
 )
 
 function runEntrance() {
-  const tl = gsap.timeline({ delay: 0.2 })
+  const root = heroRef.value
+  if (!root) return
 
-  // Nav slides down
-  tl.from('.hero__nav', {
+  const tl = gsap.timeline({ delay: 0.2 })
+  const fromIfPresent = (selector, vars, position) => {
+    const elements = root.querySelectorAll(selector)
+    if (elements.length) tl.from(elements, vars, position)
+  }
+
+  fromIfPresent('.hero__nav', {
     opacity: 0,
     y: -30,
     duration: 0.8,
     ease: 'power3.out',
   })
 
-  // Heading reveals
-  tl.from('.hero__heading', {
+  fromIfPresent('.hero__heading', {
     opacity: 0,
     y: 80,
     duration: 1,
     ease: 'power3.out',
   }, '-=0.4')
 
-  // Side chars stagger in
-  tl.from('.hero__side-char', {
+  fromIfPresent('.hero__side-char', {
     opacity: 0,
     duration: 0.4,
     stagger: 0.05,
     ease: 'power2.out',
   }, '-=0.6')
 
-  // Bottom area
-  tl.from('.hero__scroll', {
+  fromIfPresent('.hero__scroll', {
     opacity: 0,
     y: 20,
     duration: 0.6,
     ease: 'power2.out',
   }, '-=0.3')
 
-  // Badge pops in
-  tl.from('.hero__badge', {
+  fromIfPresent('.hero__badge', {
     opacity: 0,
     scale: 0.8,
     rotation: -10,
@@ -57,9 +62,11 @@ function runEntrance() {
     ease: 'back.out(1.7)',
   }, '-=0.3')
 
-  // Start continuous scroll-line animation
   tl.add(() => {
-    gsap.to('.hero__scroll-line', {
+    const scrollLine = root.querySelector('.hero__scroll-line')
+    if (!scrollLine) return
+
+    gsap.to(scrollLine, {
       width: '4rem',
       opacity: 1,
       duration: 1,
@@ -72,30 +79,9 @@ function runEntrance() {
 </script>
 
 <template>
-  <section class="hero">
-    <!-- Navigation -->
-    <nav class="hero__nav">
-      <ul class="hero__nav-links">
-        <li>
-          <a href="https://github.com/ditobaskoro" target="_blank" rel="noopener">
-            <span class="hero__nav-abbr">GH</span><span class="hero__nav-name">Github</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://www.linkedin.com/in/ditobaskoro/" target="_blank" rel="noopener">
-            <span class="hero__nav-abbr">LI</span><span class="hero__nav-name">LinkedIn</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://www.last.fm/user/DitoBaskoro" target="_blank" rel="noopener">
-            <span class="hero__nav-abbr">fm</span><span class="hero__nav-name">Last.fm</span>
-          </a>
-        </li>
-      </ul>
-      <a href="mailto:ditoanwar@me.com" class="hero__nav-email">ditoanwar@me.com</a>
-    </nav>
+  <section ref="heroRef" class="hero">
+    <SocialNavigation class="hero__nav" />
 
-    <!-- Left decorative text -->
     <div class="hero__side hero__side--left">
       <span class="hero__side-char">/</span>
       <span class="hero__side-char">D</span>
@@ -103,7 +89,6 @@ function runEntrance() {
       <span class="hero__side-char">V</span>
     </div>
 
-    <!-- Main content -->
     <div class="hero__content">
       <h1 class="hero__heading">
         <span class="hero__heading-hash">#</span>
@@ -114,7 +99,6 @@ function runEntrance() {
       </h1>
     </div>
 
-    <!-- Right decorative text -->
     <div class="hero__side hero__side--right">
       <span class="hero__side-char">C</span>
       <span class="hero__side-char">O</span>
@@ -125,7 +109,6 @@ function runEntrance() {
       <span class="hero__side-char">6</span>
     </div>
 
-    <!-- Bottom bar -->
     <!-- <div class="hero__bottom">
       <div class="hero__scroll">
         <div class="hero__scroll-line"></div>
@@ -151,53 +134,12 @@ function runEntrance() {
   padding: 2rem 2.5rem;
 }
 
-/* ─── Navigation ─── */
 .hero__nav {
   grid-column: 1 / -1;
   grid-row: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   padding-bottom: 2rem;
 }
 
-.hero__nav-links {
-  display: flex;
-  gap: 2rem;
-}
-
-.hero__nav-links a {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  letter-spacing: 0.02em;
-  color: var(--color-text-muted);
-  transition: color 0.3s ease;
-}
-
-.hero__nav-links a:hover {
-  color: var(--color-text);
-}
-
-.hero__nav-abbr {
-  color: var(--color-accent);
-  font-weight: 700;
-  margin-right: 0.1rem;
-}
-
-.hero__nav-email {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-}
-
-.hero__nav-email:hover {
-  color: var(--color-accent);
-}
-
-/* ─── Side decorative columns ─── */
 .hero__side {
   grid-row: 2;
   display: flex;
@@ -230,7 +172,6 @@ function runEntrance() {
   color: var(--color-accent);
 }
 
-/* ─── Main heading ─── */
 .hero__content {
   grid-column: 2;
   grid-row: 2;
@@ -262,7 +203,6 @@ function runEntrance() {
   opacity: 0.7;
 }
 
-/* ─── Bottom bar ─── */
 .hero__bottom {
   grid-column: 1 / -1;
   grid-row: 3;
@@ -334,7 +274,6 @@ function runEntrance() {
   }
 }
 
-/* ─── Responsive ─── */
 @media (max-width: 1024px) {
   .hero__content {
     padding: 2rem 2rem;
@@ -359,17 +298,6 @@ function runEntrance() {
 
   .hero__nav {
     grid-column: 1;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
-  }
-
-  .hero__nav-links {
-    gap: 1.25rem;
-  }
-
-  .hero__nav-name {
-    display: none;
   }
 
   .hero__bottom {
