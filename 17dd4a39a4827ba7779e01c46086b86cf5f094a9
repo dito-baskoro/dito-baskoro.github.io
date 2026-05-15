@@ -1,0 +1,23 @@
+src/components/SocialNavigation.vue
+  0736420c1a4016ec 23-25,68-121,123-126,128,131-132
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.23",
+  "base_commit_sha": "17dd4a39a4827ba7779e01c46086b86cf5f094a9",
+  "prompts": {
+    "0736420c1a4016ec": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "15640a55-6f14-4267-8abf-1304f6d50aad",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "dito-baskoro <ditoabaskoro@gmail.com>",
+      "messages": [],
+      "total_additions": 66,
+      "total_deletions": 5,
+      "accepted_lines": 64,
+      "overriden_lines": 0
+    }
+  }
+}
