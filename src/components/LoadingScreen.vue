@@ -78,7 +78,7 @@ onMounted(() => {
         <span class="loading__initial">D</span>
         <span class="loading__initial">B</span>
       </div>
-      <p class="loading__label">Loading...</p>
+      <p class="loading__label">Fake Loading...</p>
     </div>
 
     <!-- Counter -->
