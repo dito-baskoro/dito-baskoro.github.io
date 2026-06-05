@@ -1,9 +1,6 @@
 export const technologies = [
-  'HTML',
-  'CSS',
-  'SCSS',
-  'Javascript',
-  'Typescript',
+  'TypeScript',
+  'JavaScript',
   'Vue',
   'React',
   'Next.js',
@@ -11,10 +8,9 @@ export const technologies = [
   'Pinia',
   'Redux',
   'GraphQL',
-  'Restful APIs',
+  'SCSS',
   'Playwright',
   'Firebase',
   'AWS',
   'GCP',
-  'GA events',
 ]

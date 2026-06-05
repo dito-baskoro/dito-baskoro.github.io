@@ -4,9 +4,7 @@ import TechnologyStack from './TechnologyStack.vue'
 </script>
 
 <template>
-  <section class="stack-time" aria-labelledby="stack-heading">
-    <div class="stack-time__marker" aria-hidden="true">/</div>
-
+  <section class="stack-time" aria-label="Stack and local time">
     <div class="stack-time__content">
       <TechnologyStack />
       <LocalTimePanel />
@@ -17,20 +15,10 @@ import TechnologyStack from './TechnologyStack.vue'
 <style scoped>
 .stack-time {
   position: relative;
-  min-height: 100vh;
-  padding: 7rem 2.5rem 5rem;
+  padding: 8rem 2.5rem 6rem;
   border-top: 1px solid var(--color-border);
   background:
     linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-alt) 100%);
-}
-
-.stack-time__marker {
-  position: absolute;
-  top: 2rem;
-  left: 2.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--color-accent);
 }
 
 .stack-time__content {
@@ -44,10 +32,6 @@ import TechnologyStack from './TechnologyStack.vue'
 @media (max-width: 900px) {
   .stack-time {
     padding: 5rem 1.5rem 4rem;
-  }
-
-  .stack-time__marker {
-    left: 1.5rem;
   }
 
   .stack-time__content {

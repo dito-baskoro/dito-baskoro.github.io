@@ -8,7 +8,7 @@ const { now, time, status } = useJakartaClock()
 <template>
   <div class="local-time" aria-live="polite">
     <p class="local-time__eyebrow">UTC +7</p>
-    <h2 class="local-time__heading">My current local time</h2>
+    <h2 id="time-heading" class="local-time__heading">Right now in Jakarta</h2>
     <div class="local-time__display">
       <AnalogClock :date="now" />
       <p class="local-time__clock">{{ time }}</p>
@@ -32,12 +32,14 @@ const { now, time, status } = useJakartaClock()
   font-size: 0.75rem;
   color: var(--color-accent);
   letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .local-time__heading {
   font-family: var(--font-heading);
   font-size: clamp(2rem, 5vw, 5.25rem);
-  font-weight: 400;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   line-height: 0.95;
   color: var(--color-text);
 }
