@@ -2,6 +2,7 @@
 import { ref, watch } from 'vue'
 import gsap from 'gsap'
 import SocialNavigation from './SocialNavigation.vue'
+import { availability, contactEmail } from '../data/profile'
 
 const props = defineProps({
   animate: Boolean,
@@ -16,9 +17,12 @@ watch(
   },
 )
 
+const prefersReducedMotion = () =>
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
 function runEntrance() {
   const root = heroRef.value
-  if (!root) return
+  if (!root || prefersReducedMotion()) return
 
   const tl = gsap.timeline({ delay: 0.2 })
   const fromIfPresent = (selector, vars, position) => {
@@ -33,48 +37,27 @@ function runEntrance() {
     ease: 'power3.out',
   })
 
-  fromIfPresent('.hero__heading', {
+  fromIfPresent('.hero__name', {
     opacity: 0,
     y: 80,
     duration: 1,
-    ease: 'power3.out',
+    ease: 'expo.out',
   }, '-=0.4')
 
-  fromIfPresent('.hero__side-char', {
+  fromIfPresent('.hero__lead', {
     opacity: 0,
-    duration: 0.4,
-    stagger: 0.05,
-    ease: 'power2.out',
-  }, '-=0.6')
+    y: 40,
+    duration: 0.9,
+    ease: 'expo.out',
+  }, '-=0.7')
 
-  fromIfPresent('.hero__scroll', {
+  fromIfPresent('.hero__cta > *', {
     opacity: 0,
     y: 20,
     duration: 0.6,
-    ease: 'power2.out',
-  }, '-=0.3')
-
-  fromIfPresent('.hero__badge', {
-    opacity: 0,
-    scale: 0.8,
-    rotation: -10,
-    duration: 0.6,
-    ease: 'back.out(1.7)',
-  }, '-=0.3')
-
-  tl.add(() => {
-    const scrollLine = root.querySelector('.hero__scroll-line')
-    if (!scrollLine) return
-
-    gsap.to(scrollLine, {
-      width: '4rem',
-      opacity: 1,
-      duration: 1,
-      ease: 'power1.inOut',
-      yoyo: true,
-      repeat: -1,
-    })
-  })
+    stagger: 0.1,
+    ease: 'power3.out',
+  }, '-=0.5')
 }
 </script>
 
@@ -82,44 +65,24 @@ function runEntrance() {
   <section ref="heroRef" class="hero">
     <SocialNavigation class="hero__nav" />
 
-    <div class="hero__side hero__side--left">
-      <span class="hero__side-char">/</span>
-      <span class="hero__side-char">D</span>
-      <span class="hero__side-char">E</span>
-      <span class="hero__side-char">V</span>
-    </div>
-
     <div class="hero__content">
-      <h1 class="hero__heading">
-        <span class="hero__heading-hash">#</span>
-        I'm <em>Dito</em>, a creative developer
-        crafting immersive digital experiences
-        that merge design &amp; technology.
-        Let's build something remarkable.
-      </h1>
-    </div>
+      <h1 class="hero__name">Dito<br />Baskoro</h1>
+      <p class="hero__lead">
+        Creative developer in Jakarta. I design and build the front of
+        the web by hand, the kind of small, careful details you only
+        notice when they are missing.
+      </p>
 
-    <div class="hero__side hero__side--right">
-      <span class="hero__side-char">C</span>
-      <span class="hero__side-char">O</span>
-      <span class="hero__side-char">D</span>
-      <span class="hero__side-char">E</span>
-      <span class="hero__side-char">&amp;</span>
-      <span class="hero__side-char">2</span>
-      <span class="hero__side-char">6</span>
-    </div>
-
-    <!-- <div class="hero__bottom">
-      <div class="hero__scroll">
-        <div class="hero__scroll-line"></div>
-        <span class="hero__scroll-text">Scroll to explore</span>
+      <div class="hero__cta">
+        <a :href="`mailto:${contactEmail}`" class="hero__contact">
+          {{ contactEmail }}
+        </a>
+        <span class="hero__status">
+          <span class="hero__status-dot" aria-hidden="true"></span>
+          {{ availability }}
+        </span>
       </div>
-
-      <div class="hero__badge">
-        <span class="hero__badge-dot"></span>
-        Available for freelance
-      </div>
-    </div> -->
+    </div>
   </section>
 </template>
 
@@ -127,188 +90,102 @@ function runEntrance() {
 .hero {
   position: relative;
   display: grid;
-  grid-template-columns: 3.5rem 1fr 3.5rem;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr;
   min-height: 100vh;
   min-height: 100dvh;
-  padding: 2rem 2.5rem;
+  padding: 2rem 2.5rem 3.5rem;
 }
 
 .hero__nav {
-  grid-column: 1 / -1;
-  grid-row: 1;
   padding-bottom: 2rem;
 }
 
-.hero__side {
-  grid-row: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-.hero__side--left {
-  grid-column: 1;
-}
-
-.hero__side--right {
-  grid-column: 3;
-}
-
-.hero__side-char {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
-  letter-spacing: 0.15em;
-  opacity: 0.5;
-  user-select: none;
-  transition: opacity 0.3s ease, color 0.3s ease;
-}
-
-.hero__side-char:hover {
-  opacity: 1;
-  color: var(--color-accent);
-}
-
 .hero__content {
-  grid-column: 2;
-  grid-row: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 4rem;
+  align-self: center;
+  max-width: 1180px;
+  width: 100%;
+  margin: 0 auto;
 }
 
-.hero__heading {
+/* Oversized name carries the hierarchy: heavy weight, tight leading. */
+.hero__name {
   font-family: var(--font-heading);
-  font-size: clamp(1.5rem, 3.2vw, 3.2rem);
-  font-weight: 400;
-  line-height: 1.35;
+  font-size: clamp(3.75rem, 16vw, 13rem);
+  font-weight: 700;
+  line-height: 0.86;
+  letter-spacing: -0.03em;
   color: var(--color-text);
-  max-width: 52ch;
 }
 
-.hero__heading em {
-  font-style: normal;
-  color: var(--color-accent);
-  font-weight: 600;
-}
-
-.hero__heading-hash {
-  color: var(--color-accent);
+/* The lead is the quiet counterweight: small, light, specific. */
+.hero__lead {
+  margin-top: 2rem;
+  max-width: 46ch;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
   font-weight: 300;
-  margin-right: 0.3rem;
-  opacity: 0.7;
+  line-height: 1.5;
+  color: var(--color-text);
 }
 
-.hero__bottom {
-  grid-column: 1 / -1;
-  grid-row: 3;
+.hero__cta {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  padding-top: 2rem;
+  gap: 1.25rem 2.5rem;
+  margin-top: 3rem;
 }
 
-.hero__scroll {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.hero__scroll-line {
-  width: 3rem;
-  height: 1px;
-  background: var(--color-text-muted);
-  opacity: 0.6;
-}
-
-.hero__scroll-text {
+.hero__contact {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
+  font-size: clamp(1rem, 1.6vw, 1.35rem);
+  font-weight: 700;
+  color: var(--color-accent);
+  border-bottom: 1px solid transparent;
+  padding-bottom: 0.15rem;
+  transition: border-color 0.25s ease;
 }
 
-.hero__badge {
-  display: flex;
+.hero__contact:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.hero__status {
+  display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.6rem 1.2rem;
-  border: 1px solid var(--color-border);
-  border-radius: 2rem;
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--color-text-muted);
-  text-transform: uppercase;
+  font-size: 0.78rem;
   letter-spacing: 0.08em;
-  transition: border-color 0.3s ease, color 0.3s ease;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
 }
 
-.hero__badge:hover {
-  border-color: var(--color-accent);
-  color: var(--color-text);
-}
-
-.hero__badge-dot {
+.hero__status-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: var(--color-accent);
   flex-shrink: 0;
-  animation: pulse 2s ease-in-out infinite;
+  animation: hero-pulse 2.4s ease-in-out infinite;
 }
 
-@keyframes pulse {
+@keyframes hero-pulse {
   0%,
   100% {
     opacity: 1;
     transform: scale(1);
   }
   50% {
-    opacity: 0.4;
-    transform: scale(0.8);
-  }
-}
-
-@media (max-width: 1024px) {
-  .hero__content {
-    padding: 2rem 2rem;
+    opacity: 0.35;
+    transform: scale(0.78);
   }
 }
 
 @media (max-width: 768px) {
   .hero {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto;
-    padding: 1.5rem;
-  }
-
-  .hero__side {
-    display: none;
-  }
-
-  .hero__content {
-    grid-column: 1;
-    padding: 2rem 0;
-  }
-
-  .hero__nav {
-    grid-column: 1;
-  }
-
-  .hero__bottom {
-    grid-column: 1;
-    flex-direction: column;
-    gap: 1.5rem;
-    align-items: flex-start;
-  }
-
-  .hero__heading {
-    font-size: clamp(1.25rem, 5vw, 2rem);
+    padding: 1.5rem 1.5rem 2.5rem;
   }
 }
 </style>

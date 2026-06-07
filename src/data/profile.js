@@ -10,10 +10,12 @@ export const socialLinks = [
     href: 'https://www.linkedin.com/in/ditobaskoro/',
   },
   {
-    abbr: 'fm',
+    abbr: 'LF',
     label: 'Last.fm',
     href: 'https://www.last.fm/user/DitoBaskoro',
   },
 ]
 
 export const contactEmail = 'ditoanwar@me.com'
+
+export const availability = 'Open to freelance & full-time'

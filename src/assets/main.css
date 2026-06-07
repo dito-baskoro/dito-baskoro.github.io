@@ -1,10 +1,16 @@
 :root {
-  --color-bg: #0a0a0a;
-  --color-bg-alt: #111111;
-  --color-text: #e8e8e8;
-  --color-text-muted: #555555;
-  --color-accent: #c8ff00;
-  --color-border: #252525;
+  /* Neutrals tinted toward the brand hue (warm-green), never flat gray */
+  --color-bg: oklch(0.16 0.006 150);
+  --color-bg-alt: oklch(0.2 0.008 150);
+  --color-text: oklch(0.94 0.01 150);
+  /* Lifted from the old ~3:1 #555 to ~5:1 so body/links pass WCAG AA */
+  --color-text-muted: oklch(0.68 0.012 150);
+  /* Truly decorative-only text (never used for links or essential copy) */
+  --color-text-dim: oklch(0.52 0.012 150);
+  /* Off the template neon: a warmer, more deliberate citron */
+  --color-accent: oklch(0.88 0.2 128);
+  --color-accent-deep: oklch(0.78 0.19 128);
+  --color-border: oklch(0.28 0.008 150);
   --font-heading: 'Space Grotesk', -apple-system, sans-serif;
   --font-body: 'Space Grotesk', -apple-system, sans-serif;
   --font-mono: 'Space Mono', 'Courier New', monospace;
@@ -42,6 +48,12 @@ a:hover {
   color: var(--color-accent);
 }
 
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
 ul,
 ol {
   list-style: none;
@@ -62,4 +74,14 @@ button {
 
 #app {
   min-height: 100vh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

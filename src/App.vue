@@ -18,8 +18,10 @@ function onLoadingComplete() {
 </script>
 
 <template>
-  <HeroSection :animate="animateHero" />
-  <StackAndTimeSection />
+  <main>
+    <HeroSection :animate="animateHero" />
+    <StackAndTimeSection />
+  </main>
   <FooterNavigation />
   <LoadingScreen
     v-if="showLoading"
