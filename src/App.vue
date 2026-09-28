@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import LoadingScreen from './components/LoadingScreen.vue'
 import HeroSection from './components/HeroSection.vue'
+import SelectedWorkSection from './components/SelectedWorkSection.vue'
 import StackAndTimeSection from './components/StackAndTimeSection.vue'
 import FooterNavigation from './components/FooterNavigation.vue'
 
@@ -20,6 +21,7 @@ function onLoadingComplete() {
 <template>
   <main>
     <HeroSection :animate="animateHero" />
+    <SelectedWorkSection />
     <StackAndTimeSection />
   </main>
   <FooterNavigation />

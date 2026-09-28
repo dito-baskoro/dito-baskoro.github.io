@@ -74,6 +74,10 @@ function runEntrance() {
       </p>
 
       <div class="hero__cta">
+        <a href="#selected-work" class="hero__work-link">
+          View selected work
+          <span aria-hidden="true">↓</span>
+        </a>
         <a :href="`mailto:${contactEmail}`" class="hero__contact">
           {{ contactEmail }}
         </a>
@@ -134,6 +138,35 @@ function runEntrance() {
   align-items: center;
   gap: 1.25rem 2.5rem;
   margin-top: 3rem;
+}
+
+.hero__work-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  padding: 0.7rem 0.9rem;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-bg);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--color-accent);
+}
+
+.hero__work-link span {
+  transition: transform 0.25s ease;
+}
+
+.hero__work-link:hover {
+  color: var(--color-accent);
+  background: transparent;
+}
+
+.hero__work-link:hover span {
+  transform: translateY(0.2rem);
 }
 
 .hero__contact {
