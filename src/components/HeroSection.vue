@@ -1,21 +1,11 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import gsap from 'gsap'
 import SocialNavigation from './SocialNavigation.vue'
 import { availability, contactEmail } from '../data/profile'
 
-const props = defineProps({
-  animate: Boolean,
-})
-
 const heroRef = ref(null)
-
-watch(
-  () => props.animate,
-  (val) => {
-    if (val) runEntrance()
-  },
-)
+let entranceTimeline = null
 
 const prefersReducedMotion = () =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -24,10 +14,10 @@ function runEntrance() {
   const root = heroRef.value
   if (!root || prefersReducedMotion()) return
 
-  const tl = gsap.timeline({ delay: 0.2 })
+  entranceTimeline = gsap.timeline({ delay: 0.1 })
   const fromIfPresent = (selector, vars, position) => {
     const elements = root.querySelectorAll(selector)
-    if (elements.length) tl.from(elements, vars, position)
+    if (elements.length) entranceTimeline.from(elements, vars, position)
   }
 
   fromIfPresent('.hero__nav', {
@@ -37,28 +27,43 @@ function runEntrance() {
     ease: 'power3.out',
   })
 
-  fromIfPresent('.hero__name', {
-    opacity: 0,
-    y: 80,
-    duration: 1,
-    ease: 'expo.out',
-  }, '-=0.4')
+  fromIfPresent(
+    '.hero__name',
+    {
+      opacity: 0,
+      y: 80,
+      duration: 1,
+      ease: 'expo.out',
+    },
+    '-=0.4',
+  )
 
-  fromIfPresent('.hero__lead', {
-    opacity: 0,
-    y: 40,
-    duration: 0.9,
-    ease: 'expo.out',
-  }, '-=0.7')
+  fromIfPresent(
+    '.hero__lead',
+    {
+      opacity: 0,
+      y: 40,
+      duration: 0.9,
+      ease: 'expo.out',
+    },
+    '-=0.7',
+  )
 
-  fromIfPresent('.hero__cta > *', {
-    opacity: 0,
-    y: 20,
-    duration: 0.6,
-    stagger: 0.1,
-    ease: 'power3.out',
-  }, '-=0.5')
+  fromIfPresent(
+    '.hero__cta > *',
+    {
+      opacity: 0,
+      y: 20,
+      duration: 0.6,
+      stagger: 0.1,
+      ease: 'power3.out',
+    },
+    '-=0.5',
+  )
 }
+
+onMounted(runEntrance)
+onBeforeUnmount(() => entranceTimeline?.kill())
 </script>
 
 <template>
@@ -74,6 +79,10 @@ function runEntrance() {
       </p>
 
       <div class="hero__cta">
+        <a href="#selected-work" class="hero__work-link">
+          View selected work
+          <span aria-hidden="true">↓</span>
+        </a>
         <a :href="`mailto:${contactEmail}`" class="hero__contact">
           {{ contactEmail }}
         </a>
@@ -134,6 +143,35 @@ function runEntrance() {
   align-items: center;
   gap: 1.25rem 2.5rem;
   margin-top: 3rem;
+}
+
+.hero__work-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  padding: 0.7rem 0.9rem;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-bg);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--color-accent);
+}
+
+.hero__work-link span {
+  transition: transform 0.25s ease;
+}
+
+.hero__work-link:hover {
+  color: var(--color-accent);
+  background: transparent;
+}
+
+.hero__work-link:hover span {
+  transform: translateY(0.2rem);
 }
 
 .hero__contact {

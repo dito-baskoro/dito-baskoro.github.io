@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Dito Baskoro — Creative Developer</title>
+  <desc id="description">Dark editorial social card with Dito Baskoro's name, role, Jakarta location, and citron details.</desc>
+  <defs>
+    <radialGradient id="glow" cx="82%" cy="26%" r="55%">
+      <stop offset="0" stop-color="#b1ef4a" stop-opacity="0.16" />
+      <stop offset="1" stop-color="#0b0f0c" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#edf2ed" stroke-opacity="0.035" />
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0b0f0c" />
+  <rect width="1200" height="630" fill="url(#glow)" />
+  <rect width="1200" height="630" fill="url(#grid)" />
+  <rect x="36" y="36" width="1128" height="558" fill="none" stroke="#edf2ed" stroke-opacity="0.16" />
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="18" font-weight="700" letter-spacing="3">
+    <circle cx="65" cy="75" r="5" fill="#b1ef4a" />
+    <text x="82" y="82" fill="#b1ef4a">CREATIVE DEVELOPER / JAKARTA</text>
+    <text x="1135" y="82" text-anchor="end" fill="#edf2ed" fill-opacity="0.56">PORTFOLIO / 2026</text>
+  </g>
+
+  <g fill="none" stroke="#b1ef4a" stroke-opacity="0.28">
+    <circle cx="1010" cy="222" r="112" />
+    <circle cx="1010" cy="222" r="72" />
+    <path d="M872 222h276M1010 84v276" />
+  </g>
+  <rect x="1002" y="214" width="16" height="16" fill="#b1ef4a" />
+
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-weight="700" fill="#edf2ed" letter-spacing="-7">
+    <text x="58" y="266" font-size="178">DITO</text>
+    <text x="52" y="430" font-size="158">BASKORO</text>
+  </g>
+
+  <rect x="60" y="474" width="138" height="8" fill="#b1ef4a" />
+  <path d="M220 478H1140" stroke="#edf2ed" stroke-opacity="0.16" />
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="18">
+    <text x="60" y="535" fill="#edf2ed" fill-opacity="0.72">DESIGNING AND BUILDING THE FRONT OF THE WEB BY HAND.</text>
+    <text x="1140" y="535" text-anchor="end" fill="#b1ef4a">DITO-BASKORO.GITHUB.IO</text>
+  </g>
+</svg>

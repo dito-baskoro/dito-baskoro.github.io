@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#12101f"/>
+      <stop offset="100%" stop-color="#07060f"/>
+    </radialGradient>
+    <pattern id="scanlines" patternUnits="userSpaceOnUse" width="4" height="4">
+      <rect width="4" height="2" fill="rgba(255,255,255,0.025)"/>
+    </pattern>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#bgGrad)"/>
+  <rect width="1024" height="1024" rx="220" fill="url(#scanlines)"/>
+  <g fill="#4ad9ff" opacity="0.55" transform="translate(296, 244)">
+    <rect x="0" y="0" width="312" height="52"/>
+    <rect x="0" y="52" width="104" height="52"/><rect x="260" y="52" width="104" height="52"/>
+    <rect x="0" y="104" width="104" height="52"/><rect x="260" y="104" width="104" height="52"/>
+    <rect x="0" y="156" width="104" height="52"/><rect x="260" y="156" width="104" height="52"/>
+    <rect x="0" y="208" width="312" height="52"/>
+    <rect x="0" y="260" width="104" height="52"/><rect x="156" y="260" width="104" height="52"/>
+    <rect x="0" y="312" width="104" height="52"/><rect x="208" y="312" width="104" height="52"/>
+    <rect x="0" y="364" width="104" height="52"/><rect x="260" y="364" width="104" height="52"/>
+    <rect x="0" y="416" width="104" height="52"/><rect x="312" y="416" width="104" height="52"/>
+    <rect x="0" y="468" width="104" height="52"/><rect x="312" y="468" width="104" height="52"/>
+  </g>
+  <g fill="#ff3df2" opacity="0.45" transform="translate(312, 260)">
+    <rect x="0" y="0" width="312" height="52"/>
+    <rect x="0" y="52" width="104" height="52"/><rect x="260" y="52" width="104" height="52"/>
+    <rect x="0" y="104" width="104" height="52"/><rect x="260" y="104" width="104" height="52"/>
+    <rect x="0" y="156" width="104" height="52"/><rect x="260" y="156" width="104" height="52"/>
+    <rect x="0" y="208" width="312" height="52"/>
+    <rect x="0" y="260" width="104" height="52"/><rect x="156" y="260" width="104" height="52"/>
+    <rect x="0" y="312" width="104" height="52"/><rect x="208" y="312" width="104" height="52"/>
+    <rect x="0" y="364" width="104" height="52"/><rect x="260" y="364" width="104" height="52"/>
+    <rect x="0" y="416" width="104" height="52"/><rect x="312" y="416" width="104" height="52"/>
+    <rect x="0" y="468" width="104" height="52"/><rect x="312" y="468" width="104" height="52"/>
+  </g>
+  <g fill="#ffb547" transform="translate(304, 252)">
+    <rect x="0" y="0" width="312" height="52"/>
+    <rect x="0" y="52" width="104" height="52"/><rect x="260" y="52" width="104" height="52"/>
+    <rect x="0" y="104" width="104" height="52"/><rect x="260" y="104" width="104" height="52"/>
+    <rect x="0" y="156" width="104" height="52"/><rect x="260" y="156" width="104" height="52"/>
+    <rect x="0" y="208" width="312" height="52"/>
+    <rect x="0" y="260" width="104" height="52"/><rect x="156" y="260" width="104" height="52"/>
+    <rect x="0" y="312" width="104" height="52"/><rect x="208" y="312" width="104" height="52"/>
+    <rect x="0" y="364" width="104" height="52"/><rect x="260" y="364" width="104" height="52"/>
+    <rect x="0" y="416" width="104" height="52"/><rect x="312" y="416" width="104" height="52"/>
+    <rect x="0" y="468" width="104" height="52"/><rect x="312" y="468" width="104" height="52"/>
+  </g>
+</svg>

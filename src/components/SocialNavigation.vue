@@ -11,14 +11,17 @@ defineProps({
 </script>
 
 <template>
-  <nav :class="['social-nav', `social-nav--${variant}`]">
+  <nav
+    :class="['social-nav', `social-nav--${variant}`]"
+    aria-label="Social links"
+  >
     <ul class="social-nav__links">
       <li v-for="link in socialLinks" :key="link.href">
         <a
           :href="link.href"
           target="_blank"
-          rel="noopener"
-          :aria-label="link.label"
+          rel="noopener noreferrer"
+          :aria-label="`${link.label} (opens in a new tab)`"
         >
           <span class="social-nav__abbr">{{ link.abbr }}</span>
           <span class="social-nav__name">{{ link.label }}</span>
@@ -41,6 +44,8 @@ defineProps({
 
 .social-nav__links a {
   display: flex;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.125rem;
   align-items: center;
   gap: 0.35rem;
   font-family: var(--font-mono);
@@ -71,8 +76,12 @@ defineProps({
     gap: 1.25rem;
   }
 
-  .social-nav__name {
+  .social-nav__abbr {
     display: none;
+  }
+
+  .social-nav__name {
+    display: inline;
   }
 }
 </style>
