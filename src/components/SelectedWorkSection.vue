@@ -1,5 +1,7 @@
 <script setup>
-import { featuredProject as project } from '../data/projects'
+import { featuredProjects as projects } from '../data/projects'
+
+const projectCount = String(projects.length).padStart(2, '0')
 </script>
 
 <template>
@@ -11,55 +13,78 @@ import { featuredProject as project } from '../data/projects'
     <div class="selected-work__content">
       <header class="selected-work__header">
         <p class="selected-work__eyebrow">
-          Selected work <span aria-hidden="true">/</span> {{ project.index }}
+          Selected work <span aria-hidden="true">/</span> {{ projectCount }}
         </p>
         <div class="selected-work__introduction">
           <h2 id="selected-work-heading" class="selected-work__heading">
             Designed, built, shipped.
           </h2>
           <p class="selected-work__lead">
-            A closer look at a product shaped from first idea to working
+            A closer look at products shaped from first idea to working
             software.
           </p>
         </div>
       </header>
 
-      <article class="project" aria-labelledby="runedex-title">
+      <article
+        v-for="project in projects"
+        :key="project.id"
+        :class="[
+          'project',
+          `project--${project.visual.variant}`,
+          { 'project--reverse': project.visual.reverse },
+        ]"
+        :aria-labelledby="`${project.id}-title`"
+      >
         <div class="project__visual">
           <div class="project__window-bar" aria-hidden="true">
-            <span>runedex.app</span>
-            <span class="project__window-status">Live</span>
+            <span>{{ project.visual.chromeLabel }}</span>
+            <span class="project__window-status">
+              {{ project.visual.chromeStatus }}
+            </span>
           </div>
 
           <div class="project__screen">
-            <p class="project__signal">Activity received</p>
+            <p class="project__signal">{{ project.visual.signal }}</p>
             <img
               class="project__icon"
-              :src="project.image"
-              :alt="project.imageAlt"
-              width="1024"
-              height="1024"
+              :src="project.visual.image.src"
+              :alt="project.visual.image.alt"
+              :width="project.visual.image.width"
+              :height="project.visual.image.height"
               decoding="async"
               loading="lazy"
             />
-            <p class="project__wordmark" aria-hidden="true">Runedex</p>
+            <p class="project__wordmark" aria-hidden="true">
+              {{ project.visual.wordmark }}
+            </p>
             <p class="project__screen-tagline">{{ project.tagline }}</p>
 
-            <ol class="project__flow" aria-label="Runedex activity flow">
-              <li>Strava sync</li>
-              <li>Context engine</li>
-              <li>Encounter reveal</li>
+            <ol
+              class="project__flow"
+              :aria-label="project.visual.flowLabel"
+              :style="{
+                '--project-flow-columns': String(project.visual.flow.length),
+              }"
+            >
+              <li v-for="step in project.visual.flow" :key="step">
+                {{ step }}
+              </li>
             </ol>
           </div>
         </div>
 
         <div class="project__details">
           <p class="project__kicker">
+            <span class="project__index">{{ project.index }}</span>
+            <span aria-hidden="true">/</span>
             {{ project.category }}
             <span aria-hidden="true">·</span>
             {{ project.status }}
           </p>
-          <h3 id="runedex-title" class="project__title">{{ project.name }}</h3>
+          <h3 :id="`${project.id}-title`" class="project__title">
+            {{ project.name }}
+          </h3>
           <p class="project__summary">{{ project.summary }}</p>
           <p class="project__description">{{ project.description }}</p>
 
@@ -83,7 +108,7 @@ import { featuredProject as project } from '../data/projects'
             <ul>
               <li
                 v-for="(highlight, index) in project.highlights"
-                :key="highlight"
+                :key="`${project.id}-${index}`"
               >
                 <span aria-hidden="true">
                   {{ String(index + 1).padStart(2, '0') }}
@@ -93,22 +118,29 @@ import { featuredProject as project } from '../data/projects'
             </ul>
           </div>
 
-          <ul class="project__technologies" aria-label="Technologies used">
+          <ul
+            class="project__technologies"
+            :aria-label="`${project.name} technologies used`"
+          >
             <li v-for="technology in project.technologies" :key="technology">
               {{ technology }}
             </li>
           </ul>
 
-          <a
-            class="project__link"
-            :href="project.url"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Visit the Runedex live product (opens in a new tab)"
-          >
-            Visit live product
-            <span class="project__link-arrow" aria-hidden="true"></span>
-          </a>
+          <div class="project__links">
+            <a
+              v-for="link in project.links"
+              :key="link.href"
+              class="project__link"
+              :href="link.href"
+              target="_blank"
+              rel="noopener noreferrer"
+              :aria-label="link.ariaLabel"
+            >
+              {{ link.label }}
+              <span class="project__link-arrow" aria-hidden="true"></span>
+            </a>
+          </div>
         </div>
       </article>
     </div>
@@ -166,17 +198,63 @@ import { featuredProject as project } from '../data/projects'
 }
 
 .project {
-  --runedex-black: #07060f;
-  --runedex-surface: #12101f;
-  --runedex-orange: #fc4c02;
-  --runedex-amber: #ffb547;
-  --runedex-cyan: #4ad9ff;
-  --runedex-magenta: #ff3df2;
-
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(20rem, 0.92fr);
   gap: clamp(3rem, 7vw, 7rem);
   align-items: start;
+}
+
+.project--runedex {
+  --project-bg: #07060f;
+  --project-accent: #ffb547;
+  --project-status: #fc4c02;
+  --project-shadow-a: #4ad9ff;
+  --project-shadow-b: #ff3df2;
+  --project-on-surface: rgb(255 255 255 / 100%);
+  --project-body: rgb(255 255 255 / 72%);
+  --project-muted: rgb(255 255 255 / 58%);
+  --project-chrome: rgb(255 255 255 / 45%);
+  --project-rule: rgb(255 255 255 / 10%);
+  --project-grid: rgb(255 255 255 / 2.5%);
+  --project-scanline: rgb(255 255 255 / 2%);
+  --project-glow-primary: rgb(255 181 71 / 18%);
+  --project-glow-secondary: rgb(74 217 255 / 12%);
+}
+
+.project--sinefil {
+  --project-bg: oklch(0.18 0.012 120);
+  --project-accent: oklch(0.78 0.16 75);
+  --project-status: oklch(0.78 0.16 75);
+  --project-shadow-a: transparent;
+  --project-shadow-b: transparent;
+  --project-on-surface: oklch(0.97 0.005 90);
+  --project-body: oklch(0.86 0.008 95);
+  --project-muted: oklch(0.7 0.012 100);
+  --project-chrome: oklch(0.7 0.012 100);
+  --project-rule: oklch(0.3 0.012 120);
+  --project-grid: oklch(0.78 0.16 75 / 6%);
+  --project-scanline: transparent;
+  --project-glow-primary: oklch(0.78 0.16 75 / 14%);
+  --project-glow-secondary: oklch(0.97 0.005 90 / 4%);
+}
+
+.project + .project {
+  margin-top: clamp(6rem, 9vw, 9rem);
+  padding-top: clamp(6rem, 9vw, 9rem);
+  border-top: 1px solid var(--color-border);
+}
+
+.project--reverse {
+  grid-template-columns: minmax(20rem, 0.92fr) minmax(0, 1.08fr);
+}
+
+.project--reverse .project__visual {
+  grid-column: 2;
+}
+
+.project--reverse .project__details {
+  grid-row: 1;
+  grid-column: 1;
 }
 
 .project__visual {
@@ -184,9 +262,9 @@ import { featuredProject as project } from '../data/projects'
   min-height: clamp(34rem, 52vw, 45rem);
   overflow: hidden;
   isolation: isolate;
-  border: 1px solid color-mix(in oklch, var(--runedex-amber) 30%, transparent);
+  border: 1px solid color-mix(in oklch, var(--project-accent) 30%, transparent);
   border-radius: 1.25rem;
-  background-color: var(--runedex-black);
+  background-color: var(--project-bg);
   box-shadow: 0 2rem 5rem rgb(0 0 0 / 25%);
 }
 
@@ -196,8 +274,8 @@ import { featuredProject as project } from '../data/projects'
   inset: 0;
   content: '';
   background-image:
-    linear-gradient(rgb(255 255 255 / 2.5%) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(255 255 255 / 2.5%) 1px, transparent 1px);
+    linear-gradient(var(--project-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--project-grid) 1px, transparent 1px);
   background-size: 22px 22px;
 }
 
@@ -208,15 +286,34 @@ import { featuredProject as project } from '../data/projects'
   content: '';
   pointer-events: none;
   background:
-    radial-gradient(circle at 30% 32%, rgb(255 181 71 / 18%), transparent 35%),
-    radial-gradient(circle at 75% 72%, rgb(74 217 255 / 12%), transparent 32%),
+    radial-gradient(circle at 30% 32%, var(--project-glow-primary), transparent 35%),
+    radial-gradient(circle at 75% 72%, var(--project-glow-secondary), transparent 32%),
     repeating-linear-gradient(
       0deg,
       transparent 0,
       transparent 3px,
-      rgb(255 255 255 / 2%) 3px,
-      rgb(255 255 255 / 2%) 4px
+      var(--project-scanline) 3px,
+      var(--project-scanline) 4px
     );
+}
+
+.project--sinefil .project__visual {
+  border-radius: 0.75rem;
+}
+
+.project--sinefil .project__visual::before {
+  background-image: linear-gradient(
+    90deg,
+    var(--project-grid) 1px,
+    transparent 1px
+  );
+  background-size: 4.5rem 100%;
+}
+
+.project--sinefil .project__visual::after {
+  background:
+    radial-gradient(circle at 72% 24%, var(--project-glow-primary), transparent 38%),
+    linear-gradient(145deg, transparent 20%, rgb(0 0 0 / 28%) 100%);
 }
 
 .project__window-bar {
@@ -225,28 +322,28 @@ import { featuredProject as project } from '../data/projects'
   align-items: center;
   min-height: 3rem;
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid rgb(255 255 255 / 10%);
+  border-bottom: 1px solid var(--project-rule);
   font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgb(255 255 255 / 45%);
+  color: var(--project-chrome);
 }
 
 .project__window-status {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  color: var(--runedex-amber);
+  color: var(--project-accent);
 }
 
 .project__window-status::before {
   width: 0.45rem;
   height: 0.45rem;
   border-radius: 50%;
-  background: var(--runedex-orange);
+  background: var(--project-status);
   content: '';
-  box-shadow: 0 0 0.75rem var(--runedex-orange);
+  box-shadow: 0 0 0.75rem var(--project-status);
 }
 
 .project__screen {
@@ -262,11 +359,11 @@ import { featuredProject as project } from '../data/projects'
 .project__signal {
   align-self: flex-start;
   padding: 0.45rem 0.65rem;
-  border: 1px solid rgb(255 181 71 / 35%);
+  border: 1px solid color-mix(in oklch, var(--project-accent) 35%, transparent);
   font-family: var(--font-mono);
   font-size: 0.62rem;
   line-height: 1;
-  color: var(--runedex-amber);
+  color: var(--project-accent);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -277,9 +374,9 @@ import { featuredProject as project } from '../data/projects'
   height: 0.4rem;
   margin-right: 0.5rem;
   border-radius: 50%;
-  background: var(--runedex-orange);
+  background: var(--project-status);
   content: '';
-  box-shadow: 0 0 0.6rem var(--runedex-orange);
+  box-shadow: 0 0 0.6rem var(--project-status);
 }
 
 .project__icon {
@@ -295,26 +392,45 @@ import { featuredProject as project } from '../data/projects'
   font-size: clamp(2.25rem, 6vw, 5rem);
   font-weight: 700;
   line-height: 0.9;
-  color: var(--runedex-amber);
+  color: var(--project-accent);
   letter-spacing: -0.08em;
   text-transform: uppercase;
   text-shadow:
-    -3px -1px 0 var(--runedex-cyan),
-    3px 2px 0 var(--runedex-magenta);
+    -3px -1px 0 var(--project-shadow-a),
+    3px 2px 0 var(--project-shadow-b);
+}
+
+.project--sinefil .project__wordmark {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  text-transform: none;
+  text-shadow: none;
 }
 
 .project__screen-tagline {
   margin-top: 1rem;
   font-size: clamp(0.9rem, 1.5vw, 1.05rem);
-  color: rgb(255 255 255 / 72%);
+  color: var(--project-body);
+}
+
+.project--sinefil .project__screen-tagline {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-style: italic;
 }
 
 .project__flow {
   display: grid;
   width: 100%;
   margin-top: auto;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  border: 1px solid rgb(255 255 255 / 10%);
+  grid-template-columns: repeat(
+    var(--project-flow-columns),
+    minmax(0, 1fr)
+  );
+  border: 1px solid var(--project-rule);
 }
 
 .project__flow li {
@@ -323,13 +439,13 @@ import { featuredProject as project } from '../data/projects'
   font-family: var(--font-mono);
   font-size: clamp(0.55rem, 1vw, 0.68rem);
   line-height: 1.4;
-  color: rgb(255 255 255 / 58%);
+  color: var(--project-muted);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 .project__flow li + li {
-  border-left: 1px solid rgb(255 255 255 / 10%);
+  border-left: 1px solid var(--project-rule);
 }
 
 .project__details {
@@ -337,8 +453,13 @@ import { featuredProject as project } from '../data/projects'
   padding-top: 0.5rem;
 }
 
+.project__index {
+  color: var(--color-text);
+}
+
 .project__title {
   margin-top: 1.25rem;
+  overflow-wrap: anywhere;
   font-family: var(--font-heading);
   font-size: clamp(3.75rem, 8vw, 7rem);
   font-weight: 650;
@@ -435,10 +556,16 @@ import { featuredProject as project } from '../data/projects'
   letter-spacing: 0.04em;
 }
 
+.project__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.75rem;
+  margin-top: 2.5rem;
+}
+
 .project__link {
   display: inline-flex;
   min-height: 2.75rem;
-  margin-top: 2.5rem;
   padding-bottom: 0.2rem;
   align-items: center;
   gap: 0.75rem;
@@ -481,7 +608,8 @@ import { featuredProject as project } from '../data/projects'
   }
 
   .selected-work__header,
-  .project {
+  .project,
+  .project--reverse {
     grid-template-columns: 1fr;
   }
 
@@ -494,6 +622,17 @@ import { featuredProject as project } from '../data/projects'
     gap: 3.5rem;
   }
 
+  .project + .project {
+    margin-top: 5rem;
+    padding-top: 5rem;
+  }
+
+  .project--reverse .project__visual,
+  .project--reverse .project__details {
+    grid-row: auto;
+    grid-column: auto;
+  }
+
   .project__visual {
     min-height: min(43rem, 90vw);
   }
@@ -504,7 +643,8 @@ import { featuredProject as project } from '../data/projects'
 }
 
 @media (max-width: 560px) {
-  .project__visual {
+  .project__visual,
+  .project--sinefil .project__visual {
     min-height: 32rem;
     border-radius: 0.85rem;
   }
@@ -531,7 +671,7 @@ import { featuredProject as project } from '../data/projects'
   }
 
   .project__flow li + li {
-    border-top: 1px solid rgb(255 255 255 / 10%);
+    border-top: 1px solid var(--project-rule);
     border-left: 0;
   }
 }
