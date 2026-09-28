@@ -1,35 +1,17 @@
 <script setup>
-import { ref } from 'vue'
-import LoadingScreen from './components/LoadingScreen.vue'
 import HeroSection from './components/HeroSection.vue'
 import SelectedWorkSection from './components/SelectedWorkSection.vue'
 import StackAndTimeSection from './components/StackAndTimeSection.vue'
 import FooterNavigation from './components/FooterNavigation.vue'
-
-const showLoading = ref(true)
-const animateHero = ref(false)
-
-function onLoadingExiting() {
-  animateHero.value = true
-}
-
-function onLoadingComplete() {
-  showLoading.value = false
-}
 </script>
 
 <template>
   <main>
-    <HeroSection :animate="animateHero" />
+    <HeroSection />
     <SelectedWorkSection />
     <StackAndTimeSection />
   </main>
   <FooterNavigation />
-  <LoadingScreen
-    v-if="showLoading"
-    @exiting="onLoadingExiting"
-    @complete="onLoadingComplete"
-  />
 </template>
 
 <style>

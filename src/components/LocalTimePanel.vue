@@ -6,12 +6,18 @@ const { now, time, status } = useJakartaClock()
 </script>
 
 <template>
-  <div class="local-time" aria-live="polite">
+  <div class="local-time">
     <p class="local-time__eyebrow">UTC +7</p>
     <h2 id="time-heading" class="local-time__heading">Right now in Jakarta</h2>
     <div class="local-time__display">
       <AnalogClock :date="now" />
-      <p class="local-time__clock">{{ time }}</p>
+      <p
+        class="local-time__clock"
+        role="timer"
+        aria-label="Current time in Jakarta"
+      >
+        {{ time }}
+      </p>
     </div>
     <p class="local-time__status">{{ status }}</p>
   </div>
